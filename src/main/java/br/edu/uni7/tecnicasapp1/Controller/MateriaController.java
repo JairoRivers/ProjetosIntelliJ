@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -38,14 +39,12 @@ public class MateriaController {
 
 
     @RequestMapping(value = "/criarMateria", method = RequestMethod.POST)
-    public ModelAndView criarNovaMateria (String titulo, String autor, String conteudo, String data){
+    public ModelAndView criarNovaMateria (@RequestParam String titulo, @RequestParam String autor, @RequestParam String conteudo){
         Materia materia = new Materia (titulo, autor, conteudo, new Date());
-
-        MateriaRespository materiaRespository = new MateriaRespository();
-        materiaRespository.create((materia));
+        materiaRespository.create(materia);
 
         ModelAndView modelAndView = new ModelAndView("materia");
-        modelAndView.addObject("materia", materiaRespository.read());
+        modelAndView.addObject("materias", materiaRespository.read());
         return modelAndView;
 
 

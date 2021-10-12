@@ -1,9 +1,11 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
-        <link rel="stylesheet" href="css/estilo.css"
+        <link rel="stylesheet" href="css/estilo.css">
+        <script src="js/script.js"></script>
+
     </head>
     <body>
-        <h1>Diario da UNI7</h1>
+        <h1 id="tit">Diario da UNI7</h1>
         <div th:each="materia: ${materias}">
             <h2 th:text="${materia.titulo}"></h2>
             <p th:text="${materia.conteudo}"></p>
@@ -11,13 +13,13 @@
 
 
         <form action = "criarMateria" method="post">
-            <label> Titulo </label>
+            <label> Título </label>
             <input type="text" name="titulo"/>
             <label> Autor </label>
-            <input type="text" name="titulo"/>
-            <label> Conteudo </label>
+            <input type="text" name="autor"/>
+            <label> Conteúdo </label>
             <input type="text" name="conteudo"/>
-            <input type="submit" value="Cadastrar Matéria"/>
+            <input id="bot" type="submit" value="Cadastrar Matéria"/>
         </form>
     </body>
 
