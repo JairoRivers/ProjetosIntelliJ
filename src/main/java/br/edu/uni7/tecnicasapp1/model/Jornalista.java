@@ -8,6 +8,7 @@ public class Jornalista {
 
     public Jornalista(){
 
+
     }
 
     public Jornalista (String nome, String usuario, String senha){
