@@ -4,13 +4,9 @@ import br.edu.uni7.tecnicasapp1.model.Materia;
 import br.edu.uni7.tecnicasapp1.repository.MateriaRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -24,30 +20,36 @@ public class MateriaController {
         this.materiaRespository = materiaRespository;
     }
 
-    @RequestMapping("/materia")
-    public ModelAndView ListarMaterias() {
-
-        ModelAndView modelAndView = new ModelAndView("materia");
-
-        MateriaRespository materiaRespository = new MateriaRespository();
-        List<Materia> materias = materiaRespository.read();
-
-        modelAndView.addObject("materias", materias);
-
-        return modelAndView;
+    @ResponseBody
+    @RequestMapping(value = "materia/{id}", method = RequestMethod.GET)
+    public Materia encontrarMateria(@PathVariable Integer id) {
+        return materiaRespository.findById(id);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "materia", method = RequestMethod.GET)
+    public List<Materia> ListarMaterias() {
+        return materiaRespository.read();
+    }
 
-    @RequestMapping(value = "/criarMateria", method = RequestMethod.POST)
-    public ModelAndView criarNovaMateria (@RequestParam String titulo, @RequestParam String autor, @RequestParam String conteudo){
-        Materia materia = new Materia (titulo, autor, conteudo, new Date());
+    @ResponseBody
+    @RequestMapping(value = "/materia", method = RequestMethod.POST)
+    public Materia criarMateria (@RequestBody Materia materia){
+        materia.setData(new Date());
         materiaRespository.create(materia);
 
-        ModelAndView modelAndView = new ModelAndView("materia");
-        modelAndView.addObject("materias", materiaRespository.read());
-        return modelAndView;
-
-
+        return materia;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "materia/{id}", method = RequestMethod.DELETE)
+    public void apagarMateria(@PathVariable Integer id){
+        materiaRespository.delete(id);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "materia/{id}", method = RequestMethod.PUT)
+    public void atualizarMateria(@PathVariable Integer id, @RequestBody Materia materia){
+        materiaRespository.update(id, materia);
+    }
 }
