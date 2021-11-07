@@ -48,6 +48,7 @@ function exibirMaterias() {
             adicionarMateria((listaDeMaterias[i]));
         }
     };
+
     oReq.open("GET", "materia", true);
     oReq.setRequestHeader("Content-Type", "application/json");
     oReq.send();
